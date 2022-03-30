@@ -18,8 +18,8 @@ public class UserServiceTest {
     public void addInsert(){
         try {
             User user = new User();
-            user.setUsername("王五");
-            user.setPassword("002");
+            user.setUsername("张三");
+            user.setPassword("001");
             userService.addUser(user);
             System.out.println("ok");
         } catch (ServiceException e) {
@@ -30,7 +30,7 @@ public class UserServiceTest {
     @Test
     public void login(){
         try {
-            User user = userService.login("cool", "123");
+            User user = userService.login("张三", "001");
             System.out.println(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());

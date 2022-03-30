@@ -69,7 +69,7 @@ public class UserService {
      * @return 当前匹配的用户数据
      */
     @GetMapping("/login")
-    public User login(@RequestParam("username") String username, @RequestParam("password") String password){
+    public User login( String username,  String password){
         User user = userMapper.findByUsername(username);
         if(user == null){
             throw new UsernameOrPasswordException("用户名或密码错误");
@@ -77,7 +77,7 @@ public class UserService {
         String salt = user.getSalt();
         String userPassword = user.getPassword();
         String md5Password = getMD5Password(password, salt);
-
+        // 数据库字段带下划线，要转成驼峰格式，不然可能出现空指针异常
         if(user.getIsDelete() == 1 || !(md5Password.equals(userPassword))){
             throw new UsernameOrPasswordException("用户名或密码错误");
         } else{

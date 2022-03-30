@@ -143,5 +143,26 @@
 			</div>
 		</footer>
 		<!--页脚结束-->
+	<script type="text/javascript">
+		$("#btn-login").click(function () {
+			$.ajax({
+				url:"/user/login",
+				type:"post",
+				data:$("#form-login").serialize(),
+				dataType:"json",
+				success:function (json) {
+					if(json.status == 200){
+						location.href = "index.html";
+					}else{
+						alert("登录失败")
+					}
+				},
+				error:function (xhr) {
+					alert("登录时发生未知异常" + xhr.status)
+				}
+
+			})
+		});
+	</script>
 	</body>
 </html>

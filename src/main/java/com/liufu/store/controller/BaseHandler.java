@@ -1,8 +1,13 @@
 package com.liufu.store.controller;
 
+import com.liufu.store.service.ex.InsertException;
 import com.liufu.store.service.ex.ServiceException;
+import com.liufu.store.service.ex.UsernameDuplicatedException;
+import com.liufu.store.service.ex.UsernameOrPasswordException;
 import com.liufu.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.servlet.http.HttpSession;
 
 public class BaseHandler {
     public static final int OK = 200;
@@ -17,9 +22,34 @@ public class BaseHandler {
     @ExceptionHandler(ServiceException.class)
     public JsonResult<Void> handleException(Throwable e){
         JsonResult<Void> result = new JsonResult<>();
-        result.setStatus(400);
+        if(e instanceof UsernameDuplicatedException){
+            result.setStatus(1000);
+        }
+        else if(e instanceof InsertException){
+            result.setStatus(1001);
+        }
+        else if(e instanceof UsernameOrPasswordException){
+            result.setStatus(1002);
+        }
         result.setMessage(e.getMessage());
         return result;
     }
 
+    /**
+     * 获取session对象中的uid
+     * @param session
+     * @return 当前用户的uid
+     */
+    protected final int  getUidFromSession(HttpSession session){
+        return Integer.parseInt(session.getAttribute("uid").toString());
+    }
+
+    /**
+     * 获取session对象中的username
+     * @param session
+     * @return 当前用户的username
+     */
+    protected final String getUsernameFromSession(HttpSession session){
+        return session.getAttribute("username").toString();
+    }
 }

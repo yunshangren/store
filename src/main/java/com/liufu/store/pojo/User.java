@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Data
 public class User extends Base implements Serializable {
-    private Integer uid;
+    private int uid;
     private String username;
     private String password;
     private String salt;

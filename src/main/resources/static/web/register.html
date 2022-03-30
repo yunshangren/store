@@ -143,10 +143,10 @@
 		$("#btn-reg").click(function () {
 			// 2.发送ajax()的异步请求
 			$.ajax({
-				url:"/user/",
+				url:"/user/reg",
 				type:"post",
 				data:$("#form-reg").serialize(),
-				contentType:"application/json",
+				dataType:"json",
 				success: function (json) {
 					if(json.status == 200){
 						alert("注册成功")

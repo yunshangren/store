@@ -17,4 +17,6 @@ public class JsonResult<E> implements Serializable {
         this.status = status;
         this.message = message;
     }
+
+
 }
