@@ -18,5 +18,8 @@ public class JsonResult<E> implements Serializable {
         this.message = message;
     }
 
-
+    public JsonResult(Integer status, E data) {
+        this.status = status;
+        this.data = data;
+    }
 }

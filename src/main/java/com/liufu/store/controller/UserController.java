@@ -136,11 +136,11 @@ public class UserController extends BaseHandler{
         }
 
         String avatar = "/upload/" + filename;
-
+        System.out.println(avatar);
         int uid = getUidFromSession(session);
         String username = getUsernameFromSession(session);
         userService.updateAvatarByUid(uid,avatar,username);
         // 返回用户头像的路径给前端，将来用于头像展示
-        return new JsonResult<>(OK,avatar);
+        return new JsonResult<>(OK,"修改成功",avatar);
     }
 }
