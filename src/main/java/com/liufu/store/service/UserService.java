@@ -2,16 +2,11 @@ package com.liufu.store.service;
 
 import com.liufu.store.mapper.UserMapper;
 import com.liufu.store.pojo.User;
-import com.liufu.store.service.ex.InsertException;
-import com.liufu.store.service.ex.UsernameDuplicatedException;
-import com.liufu.store.service.ex.UsernameOrPasswordException;
+import com.liufu.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
 
@@ -68,8 +63,8 @@ public class UserService {
      * @param password 用户密码
      * @return 当前匹配的用户数据
      */
-    @GetMapping("/login")
-    public User login( String username,  String password){
+
+    public User login(String username,  String password){
         User user = userMapper.findByUsername(username);
         if(user == null){
             throw new UsernameOrPasswordException("用户名或密码错误");
@@ -92,6 +87,58 @@ public class UserService {
 
             return result;
 
+        }
+    }
+
+    /**
+     * 修改密码方法
+     * @param uid uid, 用户在登录系统时，把uid,username保存在session中，所以可以在session中直接获取这个uid
+     * @param oldPassword 原密码
+     * @param newPassword 新密码
+     * @param modifiedUser 修改人
+     */
+    public void updatePassword(int uid,String oldPassword,String newPassword,String modifiedUser){
+        User user = userMapper.findByUid(uid);
+        String salt = user.getSalt();
+        String md5Password = getMD5Password(oldPassword, salt);
+        if(md5Password.equals(user.getPassword())){
+            newPassword = getMD5Password(newPassword,salt);
+            int row = userMapper.updatePasswordByUid(uid, newPassword,modifiedUser,new Date());
+            if(row != 1){
+                throw new UpdatePassWordException("修改密码时产生了未知异常");
+            }
+        }else{
+            throw new WrongPasswordException("密码错误");
+        }
+
+
+    }
+
+    /**
+     * 更新用户数据方法
+     * @param uid id
+     * @param phone 电话
+     * @param email 邮箱
+     * @param gender 性别
+     * @param modifiedUser 修改人
+     */
+    public void updateUserInfo(int uid,String phone,String email,int gender, String modifiedUser){
+        int row = userMapper.updateUserDataByUid(uid,phone,email,gender,modifiedUser,new Date());
+        if(row != 1){
+            throw new UpdateUserDataException("修改个人资料出现未知异常");
+        }
+    }
+
+    /**
+     * 修改用户的头像
+     * @param uid
+     * @param avatar 用户头像的路径
+     * @param modifiedUser
+     */
+    public void updateAvatarByUid(int uid, String avatar, String modifiedUser){
+        int row = userMapper.updateAvatarByUid(uid, avatar, modifiedUser, new Date());
+        if(row != 1){
+            throw new UpdateAvatarException("修改头像失败");
         }
     }
 

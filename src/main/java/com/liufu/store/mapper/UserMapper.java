@@ -3,6 +3,9 @@ package com.liufu.store.mapper;
 import com.liufu.store.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.util.Date;
 
 public interface UserMapper {
     /**
@@ -24,5 +27,17 @@ public interface UserMapper {
     @Select("select * from t_user where username = #{username}")
     User findByUsername(String username);
 
+    @Select("select * from t_user where uid = #{uid}")
+    User findByUid(int uid);
 
+    @Update("update t_user set password = #{password},modified_user = #{modifiedUser},modified_Time = #{modifiedTime} where uid = #{uid}")
+    int updatePasswordByUid(int uid, String password, String modifiedUser, Date modifiedTime);
+
+    @Update("update t_user set phone = #{phone}, email = #{email}, gender = #{gender}," +
+            "modified_user = #{modifiedUser}, modified_time = #{modifiedTime} where uid = #{uid}")
+    int updateUserDataByUid(int uid,String phone,String email,int gender, String modifiedUser, Date modifiedTime );
+
+
+    @Update("update t_user set avatar = #{avatar}, modified_user = #{modifiedUser},modified_Time = #{modifiedTime} where uid = #{uid}")
+    int updateAvatarByUid(int uid, String avatar, String modifiedUser, Date modifiedTime);
 }

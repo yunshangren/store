@@ -1,9 +1,7 @@
 package com.liufu.store.controller;
 
-import com.liufu.store.service.ex.InsertException;
-import com.liufu.store.service.ex.ServiceException;
-import com.liufu.store.service.ex.UsernameDuplicatedException;
-import com.liufu.store.service.ex.UsernameOrPasswordException;
+import com.liufu.store.controller.ex.*;
+import com.liufu.store.service.ex.*;
 import com.liufu.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -19,7 +17,7 @@ public class BaseHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class, FileUploadException.class})
     public JsonResult<Void> handleException(Throwable e){
         JsonResult<Void> result = new JsonResult<>();
         if(e instanceof UsernameDuplicatedException){
@@ -31,9 +29,35 @@ public class BaseHandler {
         else if(e instanceof UsernameOrPasswordException){
             result.setStatus(1002);
         }
+        else if(e instanceof WrongPasswordException){
+            result.setStatus(1003);
+        }
+        else if(e instanceof UpdatePassWordException){
+            result.setStatus(1004);
+        }
+        else if(e instanceof UpdateUserDataException){
+            result.setStatus(1005);
+        }
+        else if(e instanceof UpdateAvatarException){
+            result.setStatus(1006);
+        }
+        else if (e instanceof FileEmptyException) {
+            result.setStatus(6000);
+        }
+        else if (e instanceof FileSizeException) {
+            result.setStatus(6001);
+        }
+        else if (e instanceof FileTypeException) {
+            result.setStatus(6002);
+        }
+        else if (e instanceof FileStateException) {
+            result.setStatus(6003);
+        }
         result.setMessage(e.getMessage());
         return result;
     }
+
+
 
     /**
      * 获取session对象中的uid

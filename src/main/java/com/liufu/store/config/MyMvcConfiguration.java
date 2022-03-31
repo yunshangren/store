@@ -22,6 +22,7 @@ public class MyMvcConfiguration implements WebMvcConfigurer {
         patterns.add("/web/product.html");
         patterns.add("/user/reg");
         patterns.add("/user/login");
+
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**")
                         .excludePathPatterns(patterns);
     }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
@@ -36,5 +38,19 @@ public class UserServiceTest {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void updatePassword(){
+        try {
+            userService.updatePassword(11,"000","111","test01");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void updateAvatar(){
+        userService.updateAvatarByUid(11,"/c/avatar.png","管理员");
     }
 }
