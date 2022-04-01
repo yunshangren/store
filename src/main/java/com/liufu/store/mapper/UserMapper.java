@@ -27,6 +27,9 @@ public interface UserMapper {
     @Select("select * from t_user where username = #{username}")
     User findByUsername(String username);
 
+    @Select("select count(*) from t_user where username = #{username}")
+    int countByUsername(String username);
+
     @Select("select * from t_user where uid = #{uid}")
     User findByUid(int uid);
 

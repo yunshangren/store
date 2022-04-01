@@ -53,6 +53,9 @@ public class BaseHandler {
         else if (e instanceof FileStateException) {
             result.setStatus(6003);
         }
+        else if (e instanceof AddAddressException){
+            result.setStatus(7001);
+        }
         result.setMessage(e.getMessage());
         return result;
     }

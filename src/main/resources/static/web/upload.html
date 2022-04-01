@@ -272,7 +272,7 @@
 							// attr(属性，属性值)
 							$("#img-avatar").attr("src",json.data)
 							// 将用户上传的头像保存在cookie中
-							$.cookie("avatar",json.data,{expires:1});
+							$.cookie("avatar",json.data,{expires:7});
 							location.href = "upload.html";
 						}else{
 							alert("修改头像失败");

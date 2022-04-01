@@ -156,7 +156,7 @@
 						location.href = "index.html";
 						// 将服务器返回的头像设置到Cookie中
 						// $.cookie(key,value,time),存活时间单位为天
-						$.cookie("avatar",json.data.avatar,{expires:1});
+						$.cookie("avatar",json.data.avatar,{expires:7});
 					}else{
 						alert("登录失败，用户名或密码错误")
 					}

@@ -141,6 +141,6 @@ public class UserController extends BaseHandler{
         String username = getUsernameFromSession(session);
         userService.updateAvatarByUid(uid,avatar,username);
         // 返回用户头像的路径给前端，将来用于头像展示
-        return new JsonResult<>(OK,"修改成功",avatar);
+        return new JsonResult<>(OK,"修改头像成功",avatar);
     }
 }

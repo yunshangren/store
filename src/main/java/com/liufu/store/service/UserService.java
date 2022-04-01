@@ -24,8 +24,8 @@ public class UserService {
      * @param user 用户对象数据
      */
     public void addUser(User user){
-        User result = userMapper.findByUsername(user.getUsername());
-        if(result != null){
+        int result = userMapper.countByUsername(user.getUsername());
+        if(result != 0){
             throw new UsernameDuplicatedException("用户名被占用");
         }
 

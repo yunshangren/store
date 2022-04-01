@@ -9,16 +9,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JsonResult<E> implements Serializable {
-    private Integer status;
+    private int status;
     private String message;
     private E data;
 
-    public JsonResult(Integer status, String message) {
+    public JsonResult(int status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public JsonResult(Integer status, E data) {
+    public JsonResult(int status, E data) {
         this.status = status;
         this.data = data;
     }
